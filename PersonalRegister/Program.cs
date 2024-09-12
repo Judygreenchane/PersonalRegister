@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections;
- 
+
 
 namespace PersonalRegister
 {
-     class Program
+    class Program
     {
-        static bool programQuit=false;
-       
-       
-       
 
+        static bool programQuit = false;
+        static Payroll payroll = new Payroll();
         static void Main(string[] args)
         {
-            
-           while (programQuit == false) 
-                {
+            while (programQuit == false)
+            {
                 MainMenuText();
                 UserChoise(UserInput());
-                }
+            }
         }
+
         static void MainMenuText()
         {
             Console.WriteLine("Gör ditt val");
@@ -29,7 +27,7 @@ namespace PersonalRegister
         }
         static int UserInput()
         {
-           string inputString = Console.ReadLine();
+            string inputString = Console.ReadLine();
             int inputNum;
             Int32.TryParse(inputString, out inputNum);
             return inputNum;
@@ -38,48 +36,44 @@ namespace PersonalRegister
         {
             switch (userInput)
             {
-                case 1: AngePersonalUppgifter();
-                        break;
-                case 2: VisaPersonalUppgifter();
-                        break;
-                case 3: Console.WriteLine("Programmet Avsluttas");
-                        programQuit = true;
-                        break;
-                default:Console.WriteLine("Ditt val är ej giltigt , prova igen. ");
-                       UserChoise(UserInput());
-                       break;
+                case 1:
+                    AngePersonalUppgifter();
+                    break;
+                case 2:
+                    VisaPersonalUppgifter();
+                    break;
+                case 3:
+                    Console.WriteLine("Programmet Avsluttas");
+                    programQuit = true;
+                    break;
+                default:
+                    Console.WriteLine("Ditt val är ej giltigt , prova igen. ");
+                    UserChoise(UserInput());
+                    break;
 
 
 
 
             }
         }
-         static List<PersonalRegister.Pesonal> personal = new List<PersonalRegister.Pesonal>();
         static void AngePersonalUppgifter()
         {
-            
             Console.WriteLine("Ange Personals Namn");
-            string namn= Console .ReadLine();
-            Console.WriteLine(namn);
+            string name = Console.ReadLine();
             Console.WriteLine("Ange Personals lön");
-            float lon=float.Parse(Console.ReadLine());
-            Console.WriteLine(lon);
-            // PersonalRegister.Pesonal p = new Pesonal (namn,lon);
-            personal.Add(new PersonalRegister.Pesonal(namn, lon));
-            
-
-
-
-
+            int salary = Int32.Parse(Console.ReadLine());
+            payroll.AddEmployees(name, salary);
         }
         static void VisaPersonalUppgifter()
         {
-            foreach(var personal in personal)
+            IEnumerable<Employee> emp = payroll.GetEmployees();
+            foreach (Employee employee in emp)
             {
-                personal.DisplayInfo();
+                Console.WriteLine($"Name  : {employee.Name}    Salary    : {employee.Salary}");
             }
-        }
 
+
+        }
 
     }
 }
